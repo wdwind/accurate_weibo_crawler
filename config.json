@@ -1,0 +1,27 @@
+{
+    "mode": "normal",
+    "db": "t5.db",
+    "base_url": "http://weibo.cn/u/",
+    "access_token": "",
+    "expires_in": "",
+    "cookie": "",
+    "phantomjs_folder": "./phantomjs-2.1.1-windows/bin",
+    "timeout": 10000,
+    "tasks": [
+      {
+        "uid": "3669120105",
+        "name": "LT",
+        "screenshots_path": "./screenshots",
+        "temp_screenshots_path": "./screenshots2",
+        "screenshots_hot_comments": false
+      },
+      {
+        "uid": "3675868752",
+        "name": "FXD",
+        "screenshots_path": "C:\\screenshots",
+        "temp_screenshots_path": "C:\\screenshots2",
+        "screenshots_hot_comments": true
+      }
+    ]
+
+}
