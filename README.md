@@ -42,15 +42,12 @@ All configuration options are in `config.json`.
  - `db`: Database. Let the default value here except if you want to use multiple databases.
  - `base_url`: Useless.
  - `phantomjs_folder`: The folder which contains `phantomjs.exe`.
- - `timeout`: Timeout when capturing the screenshots (milliseconds). This value should be set based on your Internet connection speed.
- - `access_token` and `expires_in`.
-  
-    Go to the following link: 
+ - `timeout`: Timeout when capturing the screenshots (in milliseconds). This value should be set based on your Internet connection speed.
+ - `access_token` and `expires_in`. Go to the following link:
+
     https://open.weibo.cn/oauth2/authorize?client_id=211160679&response_type=token&redirect_uri=http://oauth.weico.cc&key_hash=1e6e33db08f9192306c4afa0a61ad56c&packagename=com.eico.weico&display=mobile&scope=email,direct_messages_read,direct_messages_write,friendships_groups_read,friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write
     
-    Finish the authorization.
-    
-    Then you will be redirected to a blank page where you can get the `access_token` and `expires_in` from the url:
+    Finish the authorization. And then you will be redirected to a blank page where you can get the `access_token` and `expires_in` from the url:
     
     http:// oauth.weico.cc/#access_token=**This is your `access_token`**&remind_in=xxx&expires_in=**This is your `expires_in`**&refresh_token=xxx&uid=xxx&scope=xxx. 
  - `cookie`: The cookie is only needed if you want to capture the screenshot of hot comments. Find out your weibo.com cookie and copy the value corresponds to key `SUB` into `config.json`. About how to view the cookies, check this [article](https://kb.iu.edu/d/ajfi).
