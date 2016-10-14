@@ -24,7 +24,7 @@ class ScreenshotsCrawler:
 		logger.log("[#] Capture screenshot %s, and put it in %s" % (url, destination))
 		#subprocess.call([self.phantomjs_folder + 'phantomjs.exe', self.phantomjs_folder + 'rasterize6_cookies.js', url, destination, str(timeout), cookie])
 		cmd = list2cmdline([path_to_unix(self.phantomjs_folder + 'phantomjs.exe'), \
-			path_to_unix(self.phantomjs_folder + 'rasterize6_cookies.js'), \
+			'./util/rasterize6_cookies.js', \
 			url, path_to_unix(destination), str(timeout), cookie])
 		r = envoy.run(str(cmd), timeout=60+timeout/1000)
 
