@@ -3,6 +3,9 @@
 from weibo import APIClient, APIError
 import sys
 import mid
+import requests
+import json
+import time
 
 # weico app key
 # https://github.com/wenmingvs/WeiBo/blob/173687ed2a32b3b59a37354caaa662314b3a928d/weiSwift/src/main/java/com/wenming/weiswift/ui/common/login/Constants.java
@@ -52,6 +55,7 @@ def user_timeline_all(uid, response={}):
 			temp = user_timeline(uid, 199, max_id=max_id)
 			if len(temp) == 0:
 				break
+			time.sleep(5)
 		except Exception:
 			return response
 	return response
@@ -71,6 +75,7 @@ def user_timeline_since(uid, since_id, response={}):
 			temp = user_timeline(uid, 99, since_id=since_id)
 			if len(temp) == 0:
 				break
+			time.sleep(5)
 		except Exception:
 			return response
 	return response
@@ -89,3 +94,14 @@ def user_info(uid):
 def get_rate_limit():
 	response = client.account.rate_limit_status.get()
 	return response
+
+gsid = None
+
+def get_private_api(token):
+	url = 'http://api.weibo.cn/2/account/login'
+	data = {'access_token' : token, 'source': APP_KEY}
+	r1 = requests.post(url, data=data)
+	j1 = json.loads(r1.text)
+	global gsid
+	gsid = j1['gsid']
+	return j1
