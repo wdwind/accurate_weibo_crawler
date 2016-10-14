@@ -23,31 +23,29 @@ class ScreenshotsCrawler:
 	def capture_screenshot(self, url, destination, cookie='', timeout=30000):
 		logger.log("[#] Capture screenshot %s, and put it in %s" % (url, destination))
 		#subprocess.call([self.phantomjs_folder + 'phantomjs.exe', self.phantomjs_folder + 'rasterize6_cookies.js', url, destination, str(timeout), cookie])
-		cmd = list2cmdline([path_to_unix(self.phantomjs_folder + 'phantomjs.exe'), \
+		cmd = list2cmdline([path_to_unix(self.phantomjs), \
 			'./util/rasterize6_cookies.js', \
 			url, path_to_unix(destination), str(timeout), cookie])
 		r = envoy.run(str(cmd), timeout=60+timeout/1000)
 
 	def validity_check(self, entry):
 		out_folder = entry['screenshots_path']
-		if out_folder[-1] != '/': 
+		if out_folder[-1] != '/':
 			out_folder += '/'
 		temp_out_folder=entry['temp_screenshots_path']
-		if temp_out_folder[-1] != '/': 
+		if temp_out_folder[-1] != '/':
 			temp_out_folder += '/'
-		phantomjs_folder = self.conf['phantomjs_folder']
-		if phantomjs_folder[-1] != '/': 
-			phantomjs_folder += '/'
+		phantomjs = self.conf['phantomjs']
 		if not os.path.exists(out_folder):
 			os.mkdir(entry['screenshots_path'])
 		if not os.path.exists(temp_out_folder):
 			os.mkdir(entry['temp_screenshots_path'])
-		if not os.path.exists(phantomjs_folder):
+		if not os.path.isfile(phantomjs):
 			logger.log('[x] You need to download PhantomJs!', 'red')
 			return False
 		self.out_folder = out_folder
 		self.temp_out_folder = temp_out_folder
-		self.phantomjs_folder = phantomjs_folder
+		self.phantomjs = phantomjs
 
 	def retrive(self):
 		for entry in self.conf['tasks']:

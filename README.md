@@ -21,13 +21,13 @@ A crawler originally designed for detecting weibo deletion. One can use it to ac
  1. Install requirements
    - [Python 2.7.x](http://docs.python-guide.org/en/latest/starting/installation/)
    - [pip](https://pip.pypa.io/en/stable/installing/)
-   - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+   - [git](https://git-scm.com/)
    - [PhantomJS](http://phantomjs.org/download.html)
    - [virtualenv](https://virtualenv.pypa.io/en/stable/installation/) (Recommended)
  2. Clone the git: `git clone https://github.com/wdwind/accurate_weibo_crawler`
  3. Go into the new directory: `cd accurate_weibo_crawler`
  4. (Optional) Create a virtual environment: `virtualenv .env`
- 5. (Optional) Activate the virtual environment: `activate`
+ 5. (Optional) Activate the virtual environment: `.env\scripts\activate`
  6. Install dependencies: `pip install -r requirements.txt`
 
 ## Configuration
@@ -41,7 +41,7 @@ All configuration options are in `config.json`.
   5. `export`: Export all crawled weibo to csv file(s).
  - `db`: Database. Let the default value here except if you want to use multiple databases.
  - `base_url`: Useless.
- - `phantomjs_folder`: The folder which contains `phantomjs.exe`.
+ - `phantomjs`: The path to the executable PhantomJS binary, e.g., `C:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe`.
  - `timeout`: Timeout when capturing the screenshots (in milliseconds). This value should be set based on your Internet connection speed.
  - `access_token` and `expires_in`. Go to the following link:
 
@@ -57,6 +57,10 @@ All configuration options are in `config.json`.
     - `screenshots_path`: The path to store the screenshots.
     - `temp_screenshots_path`: The path to store the temporary screenshots. Because the quality of the screenshot highly depends on the network connectivity, sometimes the screenshots are just nothing. This folder let you check the quality of screenshots manually, and move the good ones into `screenshots_path`.
     - `screenshots_hot_comments`: Set whether to capture the screenshots of the hot comments.
+
+## Usage
+
+`python crawler.py`
 
 ## Disclaimer
 Use the crawler at your own risk.

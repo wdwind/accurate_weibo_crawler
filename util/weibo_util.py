@@ -85,3 +85,7 @@ def user_timeline_since(uid, since_id, response={}):
 def user_info(uid):
 	response = client.users.show.get(uid=uid)
 	return response
+
+def get_rate_limit():
+	response = client.account.rate_limit_status.get()
+	return response
