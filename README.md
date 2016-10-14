@@ -1,7 +1,7 @@
 accurate_weibo_crawler
 ===================
 
-A crawler originally designed for detecting weibo deletion. One can use it to accurately track a few weibo users, i.e., detecting weibo creation/deletion, outputting all weibos sent by a user to a csv file, and capturing screenshots of weibos as well as hot comments. Note that this crawler is "accurate", which means it is not intended to be used to crawl huge amount of weibo aimlessly.
+A crawler originally designed for detecting weibo deletion. One can use it to accurately track a few weibo users, i.e., detecting weibo creation/deletion, outputting all weibos sent by a user to a csv file, and capturing screenshots of weibos as well as hot comments. Note that this crawler is "accurate", which means it is not intended to be used to crawl huge amount of weibos aimlessly.
 
 ## Features
 - [x] Crawl weibos of some users
