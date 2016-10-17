@@ -39,5 +39,15 @@
 	"textLength" : "integer",
   	"retweeted_status": "text",
   	"deleted":  "integer",
-  	"created_time": "integer"
+  	"created_time": "integer",
+  	"scheme": "text",
+  	"favorited": "text",
+  	"pic_ids": "text",
+  	"mblogtypename": "text",
+  	"mblogtype": "text",
+  	"attitudes_status": "text",
+  	"recom_state": "text",
+  	"appid": "text",
+  	"pic_infos": "text",
+  	"tag_struct": "text"
 }

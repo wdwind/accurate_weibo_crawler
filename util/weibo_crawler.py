@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 import time
 import json
 import logger
+import sys
 import db_util
 import weibo_util
 import time_util
@@ -39,32 +41,72 @@ class WeiboCrawler(object):
 		uid = task['uid']
 
 		old_weibos = {}
+		since_id = 0
 		if new_user is False:
 			sql = 'SELECT * FROM status WHERE deleted=-1 AND uid=? ORDER BY id desc'
 			old_weibos = db_util.get_rows_as_json(self.conf['db'], sql, [uid])
 			old_weibos = {item['id']: item for item in old_weibos}
+			since_id = min(old_weibos.keys())
 
 		user_info = weibo_util.user_info(uid)
 		num_weibos = int(user_info['statuses_count'])
 
-		all_weibos = weibo_util.user_timeline_all(uid)
+		all_weibos = self.get_all_weibos(uid, num_weibos, max_id=0, since_id=since_id)
+		new_weibos = {wid : all_weibos[wid] for wid in all_weibos if wid not in old_weibos}
+
+		deleted_weibos = {wid : old_weibos[wid] for wid in old_weibos if wid not in all_weibos}
+		if len(all_weibos) != num_weibos:
+			deleted_weibos = self.check_deleted_weibos(deleted_weibos)
+
+		self.update_all(task, user_info, all_weibos, new_weibos, deleted_weibos)
+		#logger.log('[x] Crawl finished for user %s.' % (uid))
+
+	def get_all_weibos(self, uid, num_weibos, max_id, since_id):
+		all_weibos = {}
+		all_weibos = weibo_util.user_timeline_all(uid, num_weibos, all_weibos, weibo_util.user_timeline_public)
 		times = 0
 		while len(all_weibos) != num_weibos:
 			logger.log('[x] Crawling... %d/%d' % (len(all_weibos), num_weibos))
-			all_weibos = weibo_util.user_timeline_all(uid, all_weibos)
+			all_weibos = weibo_util.user_timeline_all(uid, num_weibos, all_weibos, weibo_util.user_timeline_public, count=200)
 			times += 1
-			if times == 10:
-				return
+			if times == 2:
+				break
+		times = 0
+		while len(all_weibos) != num_weibos:
+			logger.log('[x] Crawling... %d/%d' % (len(all_weibos), num_weibos))
+			all_weibos = weibo_util.user_timeline_all(uid, num_weibos, all_weibos, weibo_util.user_timeline_private)
+			times += 1
+			if times == 1:
+				break
+		times = 0
+		while len(all_weibos) != num_weibos:
+			logger.log('[x] Crawling... %d/%d' % (len(all_weibos), num_weibos))
+			all_weibos = weibo_util.user_timeline_all_since(uid, since_id, num_weibos, all_weibos, weibo_util.user_timeline_public, count=200)
+			times += 1
+			if times == 2:
+				break
+		# comment this part because the `since_id` argument does not work in private api
+		#times = 0
+		#while len(all_weibos) != num_weibos:
+		#	logger.log('[x] Crawling... %d/%d' % (len(all_weibos), num_weibos))
+		#	all_weibos = weibo_util.user_timeline_all_since(uid, since_id, num_weibos, all_weibos, weibo_util.user_timeline_private)
+		#	times += 1
+		#	if times == 1:
+		#		break
+		logger.log('[x] Crawling... %d/%d' % (len(all_weibos), num_weibos))
+		return all_weibos
 
-		new_weibos = {wid : all_weibos[wid] for wid in all_weibos if wid not in old_weibos}
-		deleted_weibos = {wid : old_weibos[wid] for wid in old_weibos if wid not in all_weibos}
-
-		if len(old_weibos) - len(deleted_weibos) + len(new_weibos) != num_weibos:
-			logger.log('[x] Something wrong...', 'red')
-			return
-
-		self.update_all(task, user_info, all_weibos, new_weibos, deleted_weibos)
-		logger.log('[x] Crawl finished for user %s.' % (uid))
+	def check_deleted_weibos(self, deleted_weibos):
+		if len(deleted_weibos) == 0: return deleted_weibos
+		for wid in deleted_weibos:
+			for _ in range(3):
+				if weibo_util.weibo(wid) != None:
+					del deleted_weibos[wid]
+					continue
+			mid = json.loads(deleted_weibos[wid]['mid'])
+			if weibo_util.weibo_exists(mid) is True:
+				del deleted_weibos[wid]
+		return deleted_weibos
 
 	def update_all(self, task, user_info, all_weibos, new_weibos, deleted_weibos):
 		deleted_time = self.update_deletion(deleted_weibos.values())

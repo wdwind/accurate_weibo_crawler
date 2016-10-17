@@ -50,7 +50,6 @@ All configuration options are in `config.json`.
     Finish the authorization. And then you will be redirected to a blank page where you can get the `access_token` and `expires_in` from the url:
     
     http:// oauth.weico.cc/#access_token=**【This is your `access_token`】**&remind_in=xxx&expires_in=**【This is your `expires_in`】**&refresh_token=xxx&uid=xxx&scope=xxx. 
- - `cookie`: The cookie is only needed if you want to capture the screenshot of hot comments. Find out your weibo.com cookie and copy the value corresponds to key `SUB` into `config.json`. About how to view the cookies, check this [article](https://kb.iu.edu/d/ajfi).
  - `task`: The specific accounts and tasks you would like the crawler to perform.
     - `uid`: Id of the user to be crawled. This id is contained in the url of a user's homepage.
     - `name`: User's name. You can input anything here.
@@ -63,4 +62,4 @@ All configuration options are in `config.json`.
 `python crawler.py`
 
 ## Disclaimer
-Use the crawler at your own risk.
+Since Weibo's (public or private) APIs are extremely unstable, I don't give any promise about the output of the program. Use it at your own risk. I would suggest to not run the crawler so frequently.

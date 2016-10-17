@@ -1,10 +1,9 @@
 {
     "mode": "normal",
-    "db": "t5.db",
+    "db": "t7.db",
     "base_url": "http://weibo.cn/u/",
     "access_token": "",
     "expires_in": "",
-    "cookie": "",
     "phantomjs": "C:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe",
     "timeout": 10000,
     "tasks": [

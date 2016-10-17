@@ -4,13 +4,14 @@ import json
 import logging
 #import locale
 import sys
+import ssl
 import time
 #import codecs
 import util.logger as logger
 from util.weibo_crawler import WeiboCrawler
 from util.screenshots_crawler import ScreenshotsCrawler
 from util.weibo_writer import export_all
-from util.weibo_util import set_client
+from util.weibo_util import set_client, login_private
 
 def init_config():
 	config_file = "config.json"
@@ -30,6 +31,8 @@ def main():
 	#sys.stdout = codecs.getwriter(locale.getpreferredencoding())(sys.stdout)
 	#sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
+	ssl._create_default_https_context = ssl._create_unverified_context
+
 	config = init_config()
 	if not config:
 		return
@@ -38,9 +41,16 @@ def main():
 	logger.log('[x] Configuration initialized')
 
 	set_client(config['access_token'], config['expires_in'])
+	j1 = login_private(config['access_token'])
+	if j1 is None:
+		logger.log('[x] User login fails.', 'red')
+		return
+	cookie = j1['cookie']['cookie']['.weibo.com']
+	config['cookie'] = cookie[4:cookie.index(';')]
 	run(config)
 
 def run(config):
+	config['mode'] = config['mode'].lower()
 	if config['mode'] == 'normal':
 		crawler = WeiboCrawler(config)
 		crawler.update()
