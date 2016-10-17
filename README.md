@@ -31,7 +31,7 @@ A crawler originally designed for detecting weibo deletion. One can use it to ac
  6. Install dependencies: `pip install -r requirements.txt`
 
 ## Configuration
-All configuration options are in `config.json`.
+Copy file `config.json.example` and rename it as `config.json`. All configuration options are in `config.json`.
 
  - `mode`: The mode of the crawler.
   1. `normal`: Crawl weibo once; capture screenshots once.
