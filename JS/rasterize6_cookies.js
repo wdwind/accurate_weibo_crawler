@@ -5,6 +5,12 @@ var page = new WebPage(), address, output, size;
 
 var args = require('system').args;
 
+// console.log(args[0]);
+// console.log(args[1]);
+// console.log(args[2]);
+// console.log(args[3]);
+// console.log(args[4]);
+
 //var chinese_fonts = ['Microsoft yahei', 'Droid Sans Fallback', "宋体", "方正韵动中黑简体", "方正兰亭黑简体", "方正兰亭中黑_GBK", ".萍方-简"]
 font = "'Helvetica','\\u65B9\\u6B63\\u5170\\u4EAD\\u4E2D\\u9ED1_GBK','Microsoft yahei','Segoe UI Symbol'";
 
@@ -42,9 +48,9 @@ page.open(address, function (status) {
                 // Scrolls to the bottom of page
                 window.document.body.scrollTop = document.body.scrollHeight;
               });
-          }, 9500);
+          }, 10000);
         }
-
+        
         window.setTimeout(function () {
             page.evaluate(function (font) {
                 var r = /\\u([\d\w]{4})/gi;
@@ -76,26 +82,28 @@ page.open(address, function (status) {
             //   }
             // });
 
-            var clipRect = page.evaluate(function(){
-              var m1 = document.getElementsByClassName("module-infobox line-bottom more");
-              if (m1.length != 0) return m1[0].getBoundingClientRect();
+            if (address.indexOf("comment") == -1) {
+              var clipRect = page.evaluate(function(){
+                var m1 = document.getElementsByClassName("module-infobox line-bottom more");
+                if (m1.length != 0) return m1[0].getBoundingClientRect();
 
-              var m2 = document.getElementsByClassName("commment-more");
-              if (m2.length != 0) return m2[0].getBoundingClientRect();
+                var m2 = document.getElementsByClassName("commment-more");
+                if (m2.length != 0) return m2[0].getBoundingClientRect();
 
-              var m3 = document.getElementsByClassName("comment-more");
-              if (m3.length != 0) return m3[0].getBoundingClientRect();
+                var m3 = document.getElementsByClassName("comment-more");
+                if (m3.length != 0) return m3[0].getBoundingClientRect();
 
-              return null;
-            });
+                return null;
+              });
 
-            if (clipRect != null) {
-              page.clipRect = {
-                top: 0,
-                left: 0,
-                width: page.viewportSize['width'],
-                height: clipRect.top*page.zoomFactor + clipRect.height*page.zoomFactor*2
-              };
+              if (clipRect != null) {
+                page.clipRect = {
+                  top: 0,
+                  left: 0,
+                  width: page.viewportSize['width'],
+                  height: clipRect.top*page.zoomFactor + clipRect.height*page.zoomFactor*2
+                };
+              }
             }
 
             page.render(output);
