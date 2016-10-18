@@ -1,15 +1,9 @@
 // As explained here: http://code.google.com/p/phantomjs/wiki/QuickStart
 
-var page = new WebPage(), address, output, size;
+var page = new WebPage(), address, output;
 //console.log('Usage: rasterize.js URL filename');
 
 var args = require('system').args;
-
-// console.log(args[0]);
-// console.log(args[1]);
-// console.log(args[2]);
-// console.log(args[3]);
-// console.log(args[4]);
 
 //var chinese_fonts = ['Microsoft yahei', 'Droid Sans Fallback', "宋体", "方正韵动中黑简体", "方正兰亭黑简体", "方正兰亭中黑_GBK", ".萍方-简"]
 font = "'Helvetica','\\u65B9\\u6B63\\u5170\\u4EAD\\u4E2D\\u9ED1_GBK','Microsoft yahei','Segoe UI Symbol'";
