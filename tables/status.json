@@ -49,5 +49,7 @@
   	"recom_state": "text",
   	"appid": "text",
   	"pic_infos": "text",
-  	"tag_struct": "text"
+  	"tag_struct": "text",
+  	"url_struct": "text",
+  	"expire_time": "text"
 }

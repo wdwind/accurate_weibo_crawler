@@ -33,12 +33,22 @@ def table_to_csv(db, sql, out='weibos.csv', headers=None):
 	writer.writerows(rows)
 
 def pre_process(rows):
-	de_jasnfied_rows = []
+	de_jsnfied_rows = []
+	pic = headers.index('pic_infos')
+	retweet = headers.index('retweeted_status')
 	for row in rows:
 		temp = [json.loads(item) if isinstance(item, unicode) else item for item in row]
 		temp = [item.replace('\n', '\\n') if isinstance(item, unicode) else item for item in temp]
-		de_jasnfied_rows.append(temp)
-	return de_jasnfied_rows
+		if temp[pic] != '':
+			pic_infos = temp[pic]
+			pics = [pic_infos[ind]['largest']['url'] for ind in pic_infos]
+			pics = ','.join(pics)
+			temp[pic] = pics
+		if temp[retweet] != '':
+			retweeted_text = temp[retweet]['text']
+			temp[retweet] = retweeted_text
+		de_jsnfied_rows.append(temp)
+	return de_jsnfied_rows
 
 #def byteify(input):
 #    if isinstance(input, dict):
@@ -52,7 +62,7 @@ def pre_process(rows):
 #        return input
 
 
-headers = ['uid', 'mid', 'reposts_count', 'comments_count', 'attitudes_count', 'text', 'pic_urls', 'source', 'created_at', 'created_time', 'geo', 'deleted']
+headers = ['uid', 'mid', 'reposts_count', 'comments_count', 'attitudes_count', 'text', 'retweeted_status', 'pic_infos', 'source', 'created_at', 'created_time', 'geo', 'deleted']
 
 def last_deleted_weibos_to_csv(db, uid, del_time=None, out='weibos.csv'):
 	if del_time is None:
@@ -85,7 +95,7 @@ def export_all(config):
 		logger.log('[x] Export %s\'s weibo to %s' % (uid, out), 'green')
 
 def test():
-	all_weibos_to_csv('t5.db', '3675868752', 'FXD_160903.csv')
+	all_weibos_to_csv('t7.db', '3675868752', 'FXD_test.csv')
 
 if __name__ == "__main__":
 	test()
