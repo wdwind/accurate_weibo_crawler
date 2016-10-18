@@ -11,8 +11,8 @@ import weibo_writer
 
 class WeiboCrawler(object):
 
-	TABLES = {'user_info' : './util/user_info.json',
-			  'status' : './util/status.json'}
+	TABLES = {'user_info' : './tables/user_info.json',
+			  'status' : './tables/status.json'}
 
 	def __init__(self, config):
 		self.conf = config

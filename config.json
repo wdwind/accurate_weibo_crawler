@@ -1,17 +1,17 @@
 {
     "mode": "normal",
     "db": "t7.db",
-    "base_url": "http://weibo.cn/u/",
     "access_token": "",
     "expires_in": "",
     "phantomjs": "C:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe",
-    "timeout": 10000,
+    "timeout": 20000,
     "tasks": [
       {
         "uid": "3669120105",
         "name": "LT",
         "screenshots_path": "./screenshots",
         "temp_screenshots_path": "./screenshots2",
+        "screenshots": true,
         "screenshots_hot_comments": false
       },
       {
@@ -19,6 +19,7 @@
         "name": "FXD",
         "screenshots_path": "C:\\screenshots",
         "temp_screenshots_path": "C:\\screenshots2",
+        "screenshots": false,
         "screenshots_hot_comments": true
       }
     ]

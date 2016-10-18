@@ -40,7 +40,6 @@ Copy file `config.json.example` and rename it as `config.json`. All configuratio
   4. `loop`: Loop the normal mode every 5 minutes.
   5. `export`: Export all crawled weibo to csv file(s).
  - `db`: Database. Let the default value here except if you want to use multiple databases.
- - `base_url`: Useless.
  - `phantomjs`: The path to the executable PhantomJS binary, e.g., `C:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe`.
  - `timeout`: Timeout when capturing the screenshots (in milliseconds). This value should be set based on your Internet connection speed.
  - `access_token` and `expires_in`. Go to the following link:
@@ -55,6 +54,7 @@ Copy file `config.json.example` and rename it as `config.json`. All configuratio
     - `name`: User's name. You can input anything here.
     - `screenshots_path`: The path to store the screenshots.
     - `temp_screenshots_path`: The path to store the temporary screenshots. Because the quality of the screenshot highly depends on the network connectivity, sometimes the screenshots are just nothing. This folder let you check the quality of screenshots manually, and move the good ones into `screenshots_path`.
+    - `screenshots`: Set whether to capture the screenshots of weibo.
     - `screenshots_hot_comments`: Set whether to capture the screenshots of the hot comments.
 
 ## Usage
@@ -62,4 +62,4 @@ Copy file `config.json.example` and rename it as `config.json`. All configuratio
 `python crawler.py`
 
 ## Disclaimer
-Since Weibo's (public or private) APIs are extremely unstable, I don't give any promise about the output of the program. Use it at your own risk. I would suggest to not run the crawler so frequently.
+Since Weibo's (public or private) APIs are extremely unstable, there is no guarantee that the program will give the right output. Use it at your own risk.

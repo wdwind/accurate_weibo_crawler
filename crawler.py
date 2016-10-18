@@ -41,11 +41,11 @@ def main():
 	logger.log('[x] Configuration initialized')
 
 	set_client(config['access_token'], config['expires_in'])
-	j1 = login_private(config['access_token'])
-	if j1 is None:
+	response = login_private(config['access_token'])
+	if response is None:
 		logger.log('[x] User login fails.', 'red')
 		return
-	cookie = j1['cookie']['cookie']['.weibo.com']
+	cookie = response['cookie']['cookie']['.weibo.com']
 	config['cookie'] = cookie[4:cookie.index(';')]
 	run(config)
 

@@ -6,6 +6,10 @@ import db_util
 import json
 import envoy
 
+JS_SCRIPT = './JS/rasterize6_cookies.js'
+BASE_URL_WEIBO = 'http://m.weibo.cn/%s/%s'
+BASE_URL_HOTCOMMENTS = 'http://m.weibo.cn/single/rcList?uid=%s&id=%s&type=comment&hot=1'
+
 def path_to_unix(path):
 	paths = path.split(os.sep)
 	return '/'.join(paths)
@@ -24,7 +28,7 @@ class ScreenshotsCrawler:
 		logger.log("[#] Capture screenshot %s, and put it in %s" % (url, destination))
 		#subprocess.call([self.phantomjs_folder + 'phantomjs.exe', self.phantomjs_folder + 'rasterize6_cookies.js', url, destination, str(timeout), cookie])
 		cmd = list2cmdline([path_to_unix(self.phantomjs), \
-			'./util/rasterize6_cookies.js', \
+			JS_SCRIPT, \
 			url, path_to_unix(destination), str(timeout), cookie])
 		r = envoy.run(str(cmd), timeout=60+timeout/1000)
 
@@ -53,36 +57,31 @@ class ScreenshotsCrawler:
 				continue
 			logger.log('[x] Retrive user %s\'s screenshots.' % (entry['uid']))
 			self.retrive_weibo(entry)
-			self.retrive_hot_comments(entry)
+			#self.retrive_hot_comments(entry)
+			self.retrive_weibo(entry, hot=True)
 
-	def retrive_weibo(self, entry):
-		uid = entry['uid']
-		wids = self.get_wids(uid)
-		captured_wids = self.get_captured_wids()
-		wids_retrive = []
-		for wid in wids:
-			if wid not in captured_wids:
-				wids_retrive.append(wid)
-
-		for wid in wids_retrive:
-			url = 'http://m.weibo.cn/' + uid + '/' + wid
-			destination = self.temp_out_folder + wid + '.png'
-			self.capture_screenshot(url, destination, timeout=self.conf['timeout'])
-
-	def retrive_hot_comments(self, entry):
-		if entry['screenshots_hot_comments'] is False or self.conf['cookie'] is None or self.conf['cookie'] == '':
+	def retrive_weibo(self, entry, hot=False):
+		if hot is False and entry['screenshots'] is False:
 			return
+		if hot and (entry['screenshots_hot_comments'] is False or self.conf['cookie'] is None or self.conf['cookie'] == ''):
+			return
+		if hot:
+			base_url = BASE_URL_HOTCOMMENTS
+			base_destination = self.temp_out_folder + '%s_hot_comments.png'
+		else:
+			base_url = BASE_URL_WEIBO
+			base_destination = self.temp_out_folder + '%s.png'
 		uid = entry['uid']
 		wids = self.get_wids(uid)
-		captured_wids = self.get_captured_wids(True)
+		captured_wids = self.get_captured_wids(hot=hot)
 		wids_retrive = []
 		for wid in wids:
 			if wid not in captured_wids:
 				wids_retrive.append(wid)
 
 		for wid in wids_retrive:
-			url = 'http://m.weibo.cn/single/rcList?id=' + wid + '&type=comment&hot=1'
-			destination = self.temp_out_folder + wid + '_hot_comments.png'
+			url = base_url % (uid, wid)
+			destination = base_destination % wid
 			self.capture_screenshot(url, destination, self.conf['cookie'], timeout=self.conf['timeout'])
 
 	def get_wids(self, uid):
