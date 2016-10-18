@@ -33,7 +33,7 @@ def table_to_csv(db, sql, out='weibos.csv', headers=None):
 	writer.writerows(rows)
 
 def pre_process(rows):
-	de_jsnfied_rows = []
+	de_jsonfied_rows = []
 	pic = headers.index('pic_infos')
 	retweet = headers.index('retweeted_status')
 	for row in rows:
@@ -47,8 +47,8 @@ def pre_process(rows):
 		if temp[retweet] != '':
 			retweeted_text = temp[retweet]['text']
 			temp[retweet] = retweeted_text
-		de_jsnfied_rows.append(temp)
-	return de_jsnfied_rows
+		de_jsonfied_rows.append(temp)
+	return de_jsonfied_rows
 
 #def byteify(input):
 #    if isinstance(input, dict):
