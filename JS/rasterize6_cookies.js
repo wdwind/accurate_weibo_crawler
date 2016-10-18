@@ -20,6 +20,8 @@ output = args[2];
 page.viewportSize = {width: 880, height: 600};
 page.zoomFactor = 2;
 
+var comment = address.indexOf("comment") != -1;
+
 // http://phantomjs.org/api/webpage/handler/on-resource-requested.html
 // page.onResourceRequested = function(requestData, networkRequest) {
 //   //console.log('Request (#' + requestData.id + '): ' + JSON.stringify(requestData));
@@ -36,7 +38,7 @@ page.open(address, function (status) {
         phantom.exit();
     } else {
         console.log('Page loading status: ' + status);
-        if (address.indexOf("comment") != -1) {
+        if (comment) {
           window.setInterval(function() {
               page.evaluate(function() {
                 // Scrolls to the bottom of page
@@ -76,7 +78,7 @@ page.open(address, function (status) {
             //   }
             // });
 
-            if (address.indexOf("comment") == -1) {
+            if (!comment) {
               var clipRect = page.evaluate(function(){
                 var m1 = document.getElementsByClassName("module-infobox line-bottom more");
                 if (m1.length != 0) return m1[0].getBoundingClientRect();
