@@ -37,7 +37,7 @@ def main():
 	if not config:
 		return
 
-	logger.log('[x] Weibo crawler v0.3', 'green')
+	logger.log('[x] Weibo crawler v0.4', 'green')
 	logger.log('[x] Configuration initialized')
 
 	set_client(config['access_token'], config['expires_in'])
