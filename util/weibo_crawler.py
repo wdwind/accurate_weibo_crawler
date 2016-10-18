@@ -102,7 +102,9 @@ class WeiboCrawler(object):
 			for _ in range(3):
 				if weibo_util.weibo(wid) != None:
 					del deleted_weibos[wid]
-					continue
+					break
+			if wid not in deleted_weibos:
+				continue
 			mid = json.loads(deleted_weibos[wid]['mid'])
 			if weibo_util.weibo_exists(mid) is True:
 				del deleted_weibos[wid]
