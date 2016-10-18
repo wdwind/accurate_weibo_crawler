@@ -62,4 +62,4 @@ Copy file `config.json.example` and rename it as `config.json`. All configuratio
 `python crawler.py`
 
 ## Disclaimer
-Since Weibo's (public or private) APIs are extremely unstable, there is no guarantee that the program will give the right output. Use it at your own risk.
+Since Weibo's (public or private) APIs are extremely unstable, there is no guarantee that the output of the program is correct. Use it at your own risk.
