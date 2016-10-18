@@ -27,7 +27,7 @@ A crawler originally designed for detecting weibo deletion. One can use it to ac
  2. Clone the git: `git clone https://github.com/wdwind/accurate_weibo_crawler`
  3. Go into the new directory: `cd accurate_weibo_crawler`
  4. (Optional) Create a virtual environment: `virtualenv .env`
- 5. (Optional) Activate the virtual environment: `.env\scripts\activate`
+ 5. (Optional) Activate the virtual environment: `.env\Scripts\activate`
  6. Install dependencies: `pip install -r requirements.txt`
 
 ## Configuration
