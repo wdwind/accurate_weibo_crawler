@@ -49,7 +49,8 @@ def response_filter(response, max_id, since_id, contains_like=False):
 		return None
 	result = response['statuses']
 	for item in result:
-		item['uid'] = item['user']['id']
+		if 'user' in item:
+			item['uid'] = item['user']['id']
 	if contains_like:
 		result = [item for item in result if ('like_status' not in item)]
 	if since_id != 0:
