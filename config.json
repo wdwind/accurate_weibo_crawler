@@ -20,7 +20,7 @@
         "screenshots_path": "C:\\screenshots",
         "temp_screenshots_path": "C:\\screenshots2",
         "screenshots": false,
-        "screenshots_hot_comments": false
+        "screenshots_hot_comments": true
       }
     ]
 

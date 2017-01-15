@@ -112,15 +112,15 @@ def drop_table(db, table):
     conn.close()
 
 # http://stackoverflow.com/a/18054751/4214478
-def get_rows_as_json(db, sql, entry=None):
+def get_rows_as_dict(db, sql, entry=None):
     conn = sqlite3.connect(db)
     conn.row_factory = sqlite3.Row # This enables column access by name: row['column_name'] 
-    db = conn.cursor()
+    c = conn.cursor()
 
     if entry is None:
-        rows = db.execute(sql).fetchall()
+        rows = c.execute(sql).fetchall()
     else:
-        rows = db.execute(sql, entry).fetchall()
+        rows = c.execute(sql, entry).fetchall()
 
     conn.commit()
     conn.close()

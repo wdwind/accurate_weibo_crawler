@@ -55,7 +55,7 @@ Copy file `config.json.example` and rename it as `config.json`. All configuratio
     - `screenshots_path`: The path to store the screenshots.
     - `temp_screenshots_path`: The path to store the temporary screenshots. Because the quality of the screenshot highly depends on the network connectivity, sometimes the screenshots are just nothing. This folder let you check the quality of screenshots manually, and move the good ones into `screenshots_path`.
     - `screenshots`: Set whether to capture the screenshots of weibo.
-    - `screenshots_hot_comments`: Set whether to capture the screenshots of the hot comments.
+    - `screenshots_hot_comments`: Set whether to capture the screenshots of the hot comments. **Currently Weibo disables hot comments in m.weibo.cn, so this option should be kept as `false`.**
 
 ## Usage
 
